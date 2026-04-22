@@ -12,7 +12,7 @@ import {
   X,
   FolderLock
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { logout } from '../firebase';
 import { cn } from '../lib/utils';
 import AnimatedBackground from './AnimatedBackground';
