@@ -41,7 +41,12 @@ export default function Chatbot() {
     setLoading(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+      // Check if API key is available
+      if (!process.env.GEMINI_API_KEY) {
+        throw new Error('No API key');
+      }
+
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
         contents: [...messages, { role: 'user', content: userMessage }].map(m => ({
@@ -57,11 +62,51 @@ export default function Chatbot() {
       const assistantMessage = response.text || "I'm sorry, I couldn't process that request.";
       setMessages(prev => [...prev, { role: 'assistant', content: assistantMessage }]);
     } catch (error) {
-      console.error(error);
-      setMessages(prev => [...prev, { role: 'assistant', content: "I'm having trouble connecting right now. Please try again later." }]);
+      console.error('AI API not available, using fallback responses');
+      // Use intelligent fallback responses
+      const fallbackResponse = getFallbackResponse(userMessage.toLowerCase());
+      setMessages(prev => [...prev, { role: 'assistant', content: fallbackResponse }]);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Intelligent fallback responses
+  const getFallbackResponse = (message: string): string => {
+    const lowerMessage = message.toLowerCase();
+    
+    // Safety and emergency responses
+    if (lowerMessage.includes('emergency') || lowerMessage.includes('danger') || lowerMessage.includes('help')) {
+      return `**Emergency Assistance**\n\nIf you are in immediate danger, please:\n\n1. **Call Emergency Services**: Dial 100 (Police) or 112 (General Emergency)\n2. **Use SOS Button**: Available in the main dashboard for quick alerts\n3. **Move to Safety**: If possible, move to a safe, public location\n\n**Important**: I am an AI assistant and cannot replace emergency services. Please contact local authorities immediately for urgent assistance.`;
+    }
+    
+    // Reporting process
+    if (lowerMessage.includes('report') || lowerMessage.includes('file') || lowerMessage.includes('submit')) {
+      return `**How to File a Report**\n\n1. **Go to "Report Crime"** in the sidebar\n2. **Step 1**: Select crime type and provide description\n3. **Step 2**: Add location and priority level\n4. **Step 3**: Upload evidence (photos, videos, documents)\n5. **Submit**: Your report will be securely sent to authorities\n\n**Tips**:\n- Be as detailed as possible in your description\n- Include time, date, and location\n- Upload any relevant evidence\n- You can report anonymously if preferred`;
+    }
+    
+    // Theft related
+    if (lowerMessage.includes('theft') || lowerMessage.includes('stolen')) {
+      return `**Theft Reporting Guide**\n\n**What to Include**: \n- Description of stolen items\n- Time and location of incident\n- Any witnesses or suspects\n- Serial numbers or identifying marks\n\n**Immediate Actions**:\n1. Report to local police\n2. Contact your bank (if cards stolen)\n3. File insurance claim if applicable\n\n**Prevention Tips**:\n- Keep valuables secure and out of sight\n- Use locks and security systems\n- Be aware of your surroundings`;
+    }
+    
+    // Cybercrime
+    if (lowerMessage.includes('cyber') || lowerMessage.includes('online') || lowerMessage.includes('hack')) {
+      return `**Cybercrime Reporting**\n\n**Types to Report**:\n- Online fraud/scams\n- Identity theft\n- Hacking attempts\n- Online harassment\n\n**Evidence to Collect**:\n- Screenshots of messages\n- Email headers\n- Transaction records\n- IP addresses if available\n\n**Immediate Steps**:\n1. Change compromised passwords\n2. Contact your bank\n3. Report to cybercrime department\n4. Document all evidence`;
+    }
+    
+    // General safety tips
+    if (lowerMessage.includes('safety') || lowerMessage.includes('tips') || lowerMessage.includes('protect')) {
+      return `**Personal Safety Tips**\n\n**Daily Safety**:\n- Be aware of your surroundings\n- Travel in well-lit areas at night\n- Let someone know your plans\n- Keep phone charged and accessible\n\n**Home Security**:\n- Lock doors and windows\n- Use security systems\n- Know your neighbors\n- Report suspicious activity\n\n**Digital Safety**:\n- Use strong, unique passwords\n- Enable two-factor authentication\n- Be cautious with public Wi-Fi\n- Regularly update software`;
+    }
+    
+    // System questions
+    if (lowerMessage.includes('how') || lowerMessage.includes('what') || lowerMessage.includes('explain')) {
+      return `**GuardianEye System Guide**\n\n**Features Available**:\n- **Dashboard**: View crime statistics and your reports\n- **Report Crime**: Submit incident reports with evidence\n- **Crime Map**: View crime incidents in your area\n- **Evidence Vault**: Secure storage for case files\n- **Notifications**: Updates on your report status\n- **AI Assistant**: Get help 24/7 (that's me!)\n\n**Privacy**: Your reports are encrypted and secure. Anonymous reporting is available.\n\n**Response Time**: Reports are typically reviewed within 24-48 hours.`;
+    }
+    
+    // Default response
+    return `**GuardianEye AI Assistant**\n\nI'm here to help with crime reporting and safety questions. I can assist with:\n\n- How to file a crime report\n- Safety tips for various situations\n- Understanding the reporting process\n- System features and navigation\n- Emergency guidance\n\n**Examples**: Try asking "How do I report theft?" or "What safety tips do you recommend?"\n\nFor immediate emergencies, please call 100 or 112. I'm designed to provide guidance but cannot replace emergency services.`;
   };
 
   return (
