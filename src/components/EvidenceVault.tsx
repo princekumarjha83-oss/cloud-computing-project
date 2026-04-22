@@ -13,7 +13,7 @@ import {
   Eye,
   Plus
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { storage, auth } from '../firebase';
 import { cn } from '../lib/utils';

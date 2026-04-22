@@ -24,7 +24,7 @@ import {
   Music,
   File as FileIcon
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { collection, addDoc, query, where, getDocs, limit, orderBy } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, auth, storage } from '../firebase';
@@ -32,7 +32,8 @@ import { handleFirestoreError, OperationType } from '../lib/firestore-errors';
 import { cn } from '../lib/utils';
 import { GoogleGenAI, Type } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+// Initialize AI only if API key is available
+const ai = process.env.GEMINI_API_KEY ? new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }) : null;
 
 const CRIME_TYPES = [
   'Theft', 'Assault', 'Cybercrime', 'Harassment', 'Vandalism', 'Fraud', 'Drug Related', 'Other'
@@ -115,7 +116,12 @@ export default function ReportCrime({ onComplete }: { onComplete: () => void }) 
   };
 
   const analyzeCrime = async () => {
-    if (!formData.description.trim()) return;
+    if (!formData.description.trim() || !ai) {
+      if (!ai) {
+        alert('AI analysis is not available. Please configure GEMINI_API_KEY in your environment variables.');
+      }
+      return;
+    }
     setIsAnalyzing(true);
     try {
       const response = await ai.models.generateContent({
@@ -145,6 +151,7 @@ export default function ReportCrime({ onComplete }: { onComplete: () => void }) 
       }));
     } catch (error) {
       console.error('AI Analysis failed:', error);
+      alert('AI analysis failed. You can manually select the crime type and priority.');
     } finally {
       setIsAnalyzing(false);
     }

@@ -21,7 +21,7 @@ import {
   User as UserIcon,
   ExternalLink
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { collection, query, onSnapshot, updateDoc, doc, addDoc, limit, getDocs, where, arrayUnion } from 'firebase/firestore';
 import { db } from '../firebase';
 import { handleFirestoreError, OperationType } from '../lib/firestore-errors';

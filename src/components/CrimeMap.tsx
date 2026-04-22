@@ -10,7 +10,7 @@ import {
   TrendingUp,
   Info
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { collection, query, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
 import { CrimeReport } from '../types';
