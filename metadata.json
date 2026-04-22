@@ -1,0 +1,5 @@
+{
+  "name": "GuardianEye: Crime Reporting System",
+  "description": "A comprehensive crime reporting and management system with real-time tracking, SOS, and AI-powered assistance.",
+  "requestFramePermissions": ["geolocation", "camera", "microphone"]
+}
