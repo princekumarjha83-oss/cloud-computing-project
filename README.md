@@ -6,9 +6,9 @@
 
 A modern, responsive crime reporting and management system built with React, TypeScript, and Firebase. Features real-time crime mapping, evidence management, and AI-powered chatbot assistance.
 
-## [**Live Application**](https://master.d3q8x9x8k1a9a.amplifyapp.com) - Click to view deployed application
+## [**Live Application**](https://princekumarjha83-oss.github.io/cloud-computing-project/) - Click to view deployed application
 
-![AWS Amplify Deployment](https://api.amplify.aws/v1/badges/d3q8x9x8k1a9a/deployment-status/master) 
+![GitHub Pages Deployment](https://github.com/princekumarjha83-oss/cloud-computing-project/actions/workflows/deploy.yml/badge.svg) 
 
 ## Features
 
@@ -62,9 +62,42 @@ A modern, responsive crime reporting and management system built with React, Typ
 
 ## Deployment
 
-### AWS Amplify (Recommended)
+### GitHub Pages (Recommended)
 
-This application is configured for automatic deployment to AWS Amplify:
+This application is configured for automatic deployment to GitHub Pages:
+
+1. **Automatic Deployment**: The app automatically deploys when you push to the `master` branch
+2. **Live URL**: https://princekumarjha83-oss.github.io/cloud-computing-project/
+3. **Build Status**: Check the badge above for deployment status
+
+### Manual Deployment
+
+To deploy manually:
+
+1. **Build the project**:
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy to GitHub Pages**:
+   ```bash
+   npm run deploy
+   ```
+
+### Environment Setup
+
+1. **Copy environment file**:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Add your API keys** to the `.env` file:
+   - `GEMINI_API_KEY`: For AI chatbot features (optional)
+   - `VITE_FIREBASE_*`: Firebase configuration (optional)
+
+### AWS Amplify (Alternative)
+
+You can also deploy to AWS Amplify:
 
 1. **Visit AWS Amplify Console**: https://console.aws.amazon.com/amplify/home
 2. **Connect GitHub Repository**: Select `princekumarjha83-oss/cloud-computing-project`
