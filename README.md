@@ -6,9 +6,11 @@
 
 A modern, responsive crime reporting and management system built with React, TypeScript, and Firebase. Features real-time crime mapping, evidence management, and AI-powered chatbot assistance.
 
-## [**Live Application**](https://princekumarjha83-oss.github.io/cloud-computing-project/) - Click to view deployed application
+## [**Live Application on AWS Amplify**](https://main.d3q8x9x8k1a9a.amplifyapp.com) - Click to view deployed application
 
-![GitHub Pages Deployment](https://github.com/princekumarjha83-oss/cloud-computing-project/actions/workflows/deploy.yml/badge.svg) 
+![AWS Amplify Deployment](https://api.amplify.aws/v1/badges/d3q8x9x8k1a9a/deployment-status/main) 
+
+*Alternative: [GitHub Pages Version](https://princekumarjha83-oss.github.io/cloud-computing-project/)* 
 
 ## Features
 
@@ -62,13 +64,23 @@ A modern, responsive crime reporting and management system built with React, Typ
 
 ## Deployment
 
-### GitHub Pages (Recommended)
+### AWS Amplify (Recommended)
 
-This application is configured for automatic deployment to GitHub Pages:
+This application is configured for automatic deployment to AWS Amplify:
+
+1. **Live URL**: https://main.d3q8x9x8k1a9a.amplifyapp.com
+2. **Automatic Deployment**: The app automatically deploys when you push to the `master` branch
+3. **Build Status**: Check the badge above for deployment status
+4. **Global CDN**: Fast loading times worldwide
+5. **Custom Domain**: Easy to add custom domain names
+
+### GitHub Pages (Alternative)
+
+This application is also configured for GitHub Pages deployment:
 
 1. **Automatic Deployment**: The app automatically deploys when you push to the `master` branch
 2. **Live URL**: https://princekumarjha83-oss.github.io/cloud-computing-project/
-3. **Build Status**: Check the badge above for deployment status
+3. **Build Status**: Check the Actions tab for deployment status
 
 ### Manual Deployment
 
